@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>LATAM Colaboradores</title>
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#E31837">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; user-select: none; }
+        .latam-red { background-color: #E31837; }
+        .latam-dark { background-color: #0b1a30; }
+        .latam-text-red { color: #E31837; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        @keyframes pulse-slow { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .animate-pulse-slow { animation: pulse-slow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
+    </style>
+</head>
+<body class="bg-gray-100 flex justify-center items-center h-screen overflow-hidden">
+
+    <!-- Container do App (Mobile Shell) -->
+    <div id="app-container" class="w-full max-w-md h-full bg-white flex flex-col relative shadow-2xl overflow-hidden">
+
+        <!-- SPLASH SCREEN -->
+        <div id="splash-screen" class="absolute inset-0 latam-red z-50 flex flex-col items-center justify-between py-12 transition-opacity duration-700">
+            <div class="flex-1 flex flex-col items-center justify-center space-y-4">
+                <img src="logo.png" alt="LATAM Logo" class="w-48 object-contain drop-shadow-lg" onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/6/64/Latam-logo_.png'">
+                <h1 class="text-white text-2xl font-light tracking-widest uppercase">Colaboradores</h1>
+            </div>
+            <div class="text-white text-xs opacity-80 tracking-widest">SEGURANÇA & MANUTENÇÃO</div>
+        </div>
+
+        <!-- TELA DE AUTENTICAÇÃO BIOMÉTRICA REAL -->
+        <div id="auth-screen" class="absolute inset-0 bg-gray-900 z-40 hidden flex flex-col items-center justify-center p-6 text-white">
+            <div class="w-20 h-20 rounded-full bg-red-600/20 border-2 border-red-500 flex items-center justify-center mb-6 animate-pulse">
+                <i class="fa-solid fa-fingerprint text-4xl text-red-500"></i>
+            </div>
+            <h2 class="text-xl font-bold mb-2">Autenticação Biométrica</h2>
+            <p class="text-sm text-gray-400 text-center mb-8">Toque no sensor do seu dispositivo para acessar o portal LATAM Colaboradores.</p>
+            <button onclick="realBiometricAuth()" class="w-full py-4 latam-red rounded-xl font-semibold shadow-lg hover:bg-red-700 transition flex items-center justify-center space-x-2">
+                <i class="fa-solid fa-lock"></i>
+                <span>Desbloquear com Biometria</span>
+            </button>
+            <p id="auth-error" class="text-red-400 text-xs mt-4 text-center"></p>
+        </div>
+
+        <!-- HEADER FIXO -->
+        <header class="latam-dark text-white px-4 py-3 flex items-center justify-between shadow-md z-20">
+            <div class="flex items-center space-x-3">
+                <img src="logo.png" alt="LATAM" class="h-6 object-contain" onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/6/64/Latam-logo_.png'">
+                <span class="text-xs uppercase tracking-wider bg-red-600/30 text-red-400 px-2 py-0.5 rounded font-medium border border-red-500/30">CGH / M&E</span>
+            </div>
+            <div class="flex items-center space-x-3">
+                <span class="text-xs text-gray-300 font-medium">PHILI PE</span>
+                <img src="eu.jpg" alt="Philipe" class="w-8 h-8 rounded-full border border-red-500 object-cover" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'">
+            </div>
+        </header>
+
+        <!-- CONTEÚDO DINÂMICO DAS ABAS -->
+        <main class="flex-1 overflow-y-auto hide-scrollbar relative pb-20">
+            
+            <!-- ABA 1: HOME / PERFIL -->
+            <section id="tab-home" class="tab-content p-4 space-y-4">
+                <div class="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-5 text-white shadow-xl relative overflow-hidden border border-slate-700">
+                    <div class="absolute -right-10 -bottom-10 w-36 h-36 bg-red-600/10 rounded-full blur-2xl"></div>
+                    <div class="flex items-center space-x-4 mb-4">
+                        <img src="eu.jpg" alt="Philipe Porto" class="w-20 h-20 rounded-xl border-2 border-red-500 object-cover shadow-md" onerror="this.onerror=null;this.src='https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&q=80&w=150'">
+                        <div>
+                            <h2 class="font-bold text-lg leading-tight">Philipe de Souza Silva Porto</h2>
+                            <p class="text-xs text-red-400 font-semibold mt-0.5">Mecânico de Manutenção Aeronáutica</p>
+                            <p class="text-xs text-gray-300 mt-1">Habilitação: <span class="text-white font-medium">GMP e Aviônica</span></p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-2 pt-3 border-t border-slate-700/80 text-xs">
+                        <div>
+                            <span class="text-gray-400 block">Reg ANAC:</span>
+                            <span class="font-mono font-bold text-white text-sm">370349</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 block">Base Operacional:</span>
+                            <span class="font-medium text-white">Congonhas (CGH)</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 block">Turno:</span>
+                            <span class="font-medium text-white">Madrugada (00:20 - 08:00)</span>
+                        </div>
+                        <div>
+                            <span class="text-gray-400 block">Vínculo:</span>
+                            <span class="font-medium text-white">LATAM M&E Brasil</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Status de Escala Atual -->
+                <div class="bg-white rounded-xl p-4 shadow-sm border border-gray-200">
+                    <div class="flex items-center justify-between mb-3">
+                        <h3 class="font-bold text-gray-800 text-sm flex items-center">
+                            <i class="fa-solid fa-calendar-day text-red-600 mr-2"></i> Próxima Escala de Plantão
+                        </h3>
+                        <span class="text-xs bg-emerald-100 text-emerald-700 font-semibold px-2 py-0.5 rounded-full">Ativo</span>
+                    </div>
+                    <div class="space-y-2 text-xs text-gray-600">
+                        <div class="flex justify-between py-1 border-b border-gray-100">
+                            <span>Terça, Quinta e Sábado:</span>
+                            <span class="font-semibold text-gray-800">Trabalho (00:20 - 08:00)</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-gray-100">
+                            <span>Segunda, Quarta e Sexta:</span>
+                            <span class="font-semibold text-gray-800">Trabalho (00:20 - 08:00)</span>
+                        </div>
+                        <div class="flex justify-between py-1">
+                            <span>Domingo:</span>
+                            <span class="font-semibold text-red-600">Folga</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ABA 2: ORDENS DE SERVIÇO (OS) -->
+            <section id="tab-os" class="tab-content p-4 space-y-3 hidden">
+                <div class="flex items-center justify-between mb-1">
+                    <h2 class="font-bold text-gray-800 text-base">Ordens de Serviço (CGH)</h2>
+                    <span class="text-xs bg-red-100 text-red-700 font-bold px-2.5 py-1 rounded-full">12 OS Registradas</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-2">Toque em qualquer descrição técnica para editá-la e registrar seus apontamentos de manutenção.</p>
+                <div id="os-list" class="space-y-3">
+                    <!-- Gerado dinamicamente via JS -->
+                </div>
+            </section>
+
+            <!-- ABA 3: PASSAGENS AÉREAS GIG x CGH -->
+            <section id="tab-passagens" class="tab-content p-4 space-y-3 hidden">
+                <div class="flex items-center justify-between mb-1">
+                    <h2 class="font-bold text-gray-800 text-base">Passagens Bilhete Staff (GIG ⇄ CGH)</h2>
+                    <span class="text-xs bg-blue-100 text-blue-700 font-bold px-2 py-0.5 rounded">Exclusivo LATAM</span>
+                </div>
+                <p class="text-xs text-gray-500 mb-2">Traslados operados estritamente pela LATAM Airlines Brasil.</p>
+                <div id="tickets-list" class="space-y-3">
+                    <!-- Gerado dinamicamente via JS com horários rigorosos e bilhetes em aberto baseados na escala -->
+                </div>
+            </section>
+
+            <!-- ABA 4: HOLERITE (Carregamento Infinito) -->
+            <section id="tab-holerite" class="tab-content p-4 space-y-4 hidden flex flex-col items-center justify-center min-h-[60vh]">
+                <div class="bg-white rounded-2xl p-6 shadow-sm border border-gray-200 w-full text-center space-y-4">
+                    <div class="w-16 h-16 bg-red-50 text-red-600 rounded-full flex items-center justify-center mx-auto text-2xl animate-spin">
+                        <i class="fa-solid fa-spinner"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-bold text-gray-800 text-base">Sincronizando Holerite M&E</h3>
+                        <p class="text-xs text-gray-500 mt-1">Buscando demonstrativo de pagamento atualizado na base de dados corporativa LATAM...</p>
+                    </div>
+                    <div class="w-full bg-gray-100 h-2 rounded-full overflow-hidden">
+                        <div class="bg-red-600 h-full w-2/3 animate-pulse"></div>
+                    </div>
+                    <p class="text-[10px] text-gray-400 font-mono">Conexão segura SSL 256-bit • Servidor CGH-CORP</p>
+                </div>
+            </section>
+
+        </main>
+
+        <!-- MENU INFERIOR FIXO -->
+        <nav class="absolute bottom-0 left-0 right-0 bg-white border-t border-gray-200 flex justify-around items-center h-16 z-30 shadow-lg">
+            <button onclick="switchTab('home')" class="nav-btn flex flex-col items-center justify-center w-full text-red-600" data-tab="home">
+                <i class="fa-solid fa-house text-lg"></i>
+                <span class="text-[10px] font-medium mt-1">Home</span>
+            </button>
+            <button onclick="switchTab('os')" class="nav-btn flex flex-col items-center justify-center w-full text-gray-400 hover:text-red-600" data-tab="os">
+                <i class="fa-solid fa-screwdriver-wrench text-lg"></i>
+                <span class="text-[10px] font-medium mt-1">OS</span>
+            </button>
+            <button onclick="switchTab('passagens')" class="nav-btn flex flex-col items-center justify-center w-full text-gray-400 hover:text-red-600" data-tab="passagens">
+                <i class="fa-solid fa-plane-departure text-lg"></i>
+                <span class="text-[10px] font-medium mt-1">Passagens</span>
+            </button>
+            <button onclick="switchTab('holerite')" class="nav-btn flex flex-col items-center justify-center w-full text-gray-400 hover:text-red-600" data-tab="holerite">
+                <i class="fa-solid fa-file-invoice-dollar text-lg"></i>
+                <span class="text-[10px] font-medium mt-1">Holerite</span>
+            </button>
+        </nav>
+
+        <!-- MODAL DE QR CODE / BILHETE -->
+        <div id="ticket-modal" class="absolute inset-0 bg-black/70 z-50 hidden flex items-center justify-center p-4">
+            <div class="bg-white w-full rounded-2xl p-5 shadow-2xl relative space-y-4 max-h-[90vh] overflow-y-auto">
+                <button onclick="closeTicketModal()" class="absolute top-4 right-4 text-gray-400 hover:text-gray-700 text-lg">
+                    <i class="fa-solid fa-xmark"></i>
+                </button>
+                <div class="flex items-center space-x-2 border-b pb-3">
+                    <img src="logo.png" alt="LATAM" class="h-5 object-contain" onerror="this.onerror=null;this.src='https://upload.wikimedia.org/wikipedia/commons/6/64/Latam-logo_.png'">
+                    <span class="text-xs font-bold text-gray-700 uppercase">Cartão de Embarque Staff</span>
+                </div>
+                <div id="modal-ticket-content" class="space-y-3">
+                    <!-- Conteúdo do bilhete -->
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Registrar Service Worker para PWA
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('sw.js').catch(err => console.log('SW registration failed: ', err));
+            });
+        }
+
+        // Simulação da Splash e Biometria Real
+        window.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                const splash = document.getElementById('splash-screen');
+                splash.style.opacity = '0';
+                setTimeout(() => {
+                    splash.style.display = 'none';
+                    checkBiometricRequirement();
+                }, 700);
+            }, 1500);
+
+            renderOS();
+            renderTickets();
+        });
+
+        async function checkBiometricRequirement() {
+            if (window.PublicKeyCredential) {
+                try {
+                    const available = await PublicKeyCredential.isUserVerifyingPlatformAuthenticatorAvailable();
+                    if (available) {
+                        document.getElementById('auth-screen').classList.remove('hidden');
+                        return;
+                    }
+                } catch (e) {
+                    console.log(e);
+                }
+            }
+            // Se não suportado ou erro, libera direto
+        }
+
+        async function realBiometricAuth() {
+            const errEl = document.getElementById('auth-error');
+            errEl.textContent = '';
+            try {
+                const publicKey = {
+                    challenge: new Uint8Array([21,31,105,34,45,56,67,89]),
+                    rp: { name: "LATAM Colaboradores" },
+                    user: {
+                        id: new Uint8Array([1, 2, 3, 4]),
+                        name: "philipe.porto@latam.com",
+                        displayName: "Philipe Porto"
+                    },
+                    pubKeyCredParams: [{ alg: -7, type: "public-key" }],
+                    timeout: 60000,
+                    authenticatorSelection: { authenticatorAttachment: "platform", userVerification: "required" },
+                    attestation: "none"
+                };
+                await navigator.credentials.create({ publicKey });
+                document.getElementById('auth-screen').classList.add('hidden');
+            } catch (err) {
+                // Caso o usuário cancele ou ocorra falha na simulação local do navegador, permite a entrada mesmo assim para testes
+                document.getElementById('auth-screen').classList.add('hidden');
+            }
+        }
+
+        // Navegação por Abas
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                btn.classList.remove('text-red-600');
+                btn.classList.add('text-gray-400');
+            });
+            const activeBtn = document.querySelector(`[data-tab="${tabId}"]`);
+            activeBtn.classList.remove('text-gray-400');
+            activeBtn.classList.add('text-red-600');
+        }
+
+        // Dados e Renderização das Ordens de Serviço (OS) com Descrição Editável
+        const osData = [
+            { id: "OS-89421", date: "Ontem, 03:45", ac: "PR-MXK", model: "Airbus A320", type: "GMP", title: "Substituição de Módulo de Ignição CFM56", desc: "Realizada a troca do igniter plug e verificação do chicote elétrico do motor 2 conforme AMM 74-11-02." },
+            { id: "OS-89425", date: "Ontem, 05:20", ac: "PR-XBH", model: "Airbus A321", type: "Aviônica", title: "Troubleshooting de Computador de Bordo (FMC)", desc: "Reset e reconfiguração do Flight Management Computer esquerdo devido a falha de sincronização de dados de rota." },
+            { id: "OS-89502", date: "Terça, 01:15", ac: "PT-MXT", model: "Airbus A320neo", type: "GMP", title: "Inspeção Boroscópica de Turbina (HPT)", desc: "Executada inspeção boroscópica nos estágios de alta pressão do motor esquerdo. Parâmetros dentro dos limites normais." },
+            { id: "OS-89508", date: "Terça, 04:30", ac: "PR-MYI", model: "Airbus A320", type: "Aviônica", title: "Substituição de Display PFD (Capitão)", desc: "Troca do Primary Flight Display defeituoso, teste BITE executado com sucesso e calibração de instrumentos." },
+            { id: "OS-89612", date: "Quinta, 02:10", ac: "PR-XAA", model: "Airbus A321", type: "GMP", title: "Manutenção Corretiva em Sistema de Combustível", desc: "Reparo em válvula seletora do tanque central e teste de vazão sem anomalias." },
+            { id: "OS-89619", date: "Quinta, 06:00", ac: "PR-MZY", model: "Airbus A320", type: "Aviônica", title: "Substituição de Antena VHF 1", desc: "Remoção e instalação de nova antena VHF no dorso da fuselagem com teste de ROE (SWR)." },
+            { id: "OS-89701", date: "Sábado, 00:50", ac: "PR-MYH", model: "Airbus A320", type: "GMP", title: "Troca de Filtro de Óleo e Serventia do Motor 1", desc: "Substituição do elemento filtrante e inspeção de limalha magnética no chip detector. Resultado limpo." },
+            { id: "OS-89710", date: "Sábado, 03:15", ac: "PT-MXJ", model: "Airbus A320neo", type: "Aviônica", title: "Atualização de Base de Dados NAV (AIRAC)", desc: "Upload da nova base de navegação via disquete eletrônico (DLM) nos dois FMCs da aeronave." },
+            { id: "OS-89803", date: "Segunda, 02:40", ac: "PR-XBF", model: "Airbus A321", type: "GMP", title: "Correção de Vazamento em Duto Bleed", desc: "Reaperto de abraçadeira no duto de sangria de ar do motor 2 e teste de pressão com APU." },
+            { id: "OS-89811", date: "Segunda, 05:55", ac: "PR-MXL", model: "Airbus A320", type: "Aviônica", title: "Calibração de Radar Meteorológico RDR-4000", desc: "Alinhamento e teste funcional do transceiver do radar na baía de aviônica e cockpit." },
+            { id: "OS-89904", date: "Quarta, 01:20", ac: "PR-MYK", model: "Airbus A320", type: "GMP", title: "Reparo em Sistema Reversor de Empuxo", desc: "Substituição de atuador hidráulico do reversor do motor 1 e ciclo de teste hidráulico." },
+            { id: "OS-89915", date: "Quarta, 04:45", ac: "PR-XAZ", model: "Airbus A321", type: "Aviônica", title: "Substituição de Módulo IRU (Inertial Ref)", desc: "Troca da unidade de referência inercial nº 2 com alinhamento inercial concluído em solo." }
+        ];
+
+        function renderOS() {
+            const container = document.getElementById('os-list');
+            container.innerHTML = osData.map((os, index) => `
+                <div class="bg-white rounded-xl p-3.5 shadow-sm border border-gray-200 space-y-2">
+                    <div class="flex items-center justify-between text-xs">
+                        <span class="font-bold text-red-600">${os.id}</span>
+                        <span class="text-gray-400">${os.date}</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <h4 class="font-bold text-gray-800 text-xs">${os.title}</h4>
+                        <span class="text-[10px] bg-gray-100 text-gray-700 px-2 py-0.5 rounded font-mono">${os.ac} (${os.model})</span>
+                    </div>
+                    <div class="text-[11px] text-gray-600 bg-gray-50 p-2 rounded border border-gray-100">
+                        <span class="font-semibold text-gray-700 block mb-0.5">Descrição Técnica (Editável):</span>
+                        <div contenteditable="true" class="outline-none focus:bg-white focus:ring-1 focus:ring-red-500 rounded p-1 text-gray-800" onblur="updateOSDesc(${index}, this.innerHTML)">${os.desc}</div>
+                    </div>
+                    <div class="flex items-center justify-between pt-1 text-[10px]">
+                        <span class="text-gray-500">Especialidade: <strong class="text-gray-700">${os.type}</strong></span>
+                        <span class="text-emerald-600 font-semibold"><i class="fa-solid fa-circle-check"></i> Executado e Assinado</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function updateOSDesc(index, newDesc) {
+            osData[index].desc = newDesc;
+        }
+
+        // Dados de Passagens Aéreas Rigorosas e Lógica Dinâmica GIG x CGH (100% LATAM)
+        const ticketsData = [
+            { id: "LA-3102", route: "GIG → CGH", date: "Ontem", time: "21:15", status: "Concluído", ac: "Airbus A320", seat: "12A", flightTime: "1h 05m" },
+            { id: "LA-3103", route: "CGH → GIG", date: "Ontem", time: "09:30", status: "Concluído", ac: "Airbus A320", seat: "14C", flightTime: "1h 05m" },
+            { id: "LA-3204", route: "GIG → CGH", date: "Terça-feira", time: "22:05", status: "Concluído", ac: "Airbus A321", seat: "08F", flightTime: "1h 05m" },
+            { id: "LA-3205", route: "CGH → GIG", date: "Quarta-feira", time: "08:45", status: "Concluído", ac: "Airbus A321", seat: "10B", flightTime: "1h 05m" },
+            { id: "LA-3310", route: "GIG → CGH", date: "Quinta-feira", time: "23:02", status: "Concluído", ac: "Airbus A320", seat: "05C", flightTime: "1h 05m" },
+            { id: "LA-3311", route: "CGH → GIG", date: "Sexta-feira", time: "09:15", status: "Concluído", ac: "Airbus A320", seat: "12F", flightTime: "1h 05m" },
+            { id: "LA-3420", route: "GIG → CGH", date: "Sábado", time: "21:40", status: "Concluído", ac: "Airbus A321", seat: "11E", flightTime: "1h 05m" },
+            { id: "LA-3421", route: "CGH → GIG", date: "Domingo", time: "10:00", status: "Concluído", ac: "Airbus A321", seat: "07A", flightTime: "1h 05m" },
+            // Próximo dia escala (Exemplo: Ida em aberto a confirmar)
+            { id: "LA-3500", route: "GIG → CGH", date: "Hoje / Próx. Plantão", time: "23:02", status: "Em Aberto (A Confirmar)", ac: "Airbus A320", seat: "Staff", flightTime: "1h 05m" }
+        ];
+
+        function renderTickets() {
+            const container = document.getElementById('tickets-list');
+            container.innerHTML = ticketsData.map((t, idx) => `
+                <div onclick="openTicketModal(${idx})" class="bg-white rounded-xl p-3.5 shadow-sm border border-gray-200 hover:border-red-500 cursor-pointer transition flex items-center justify-between">
+                    <div class="space-y-1">
+                        <div class="flex items-center space-x-2">
+                            <span class="text-xs font-bold text-red-600">${t.id}</span>
+                            <span class="text-[10px] font-medium bg-gray-100 text-gray-700 px-2 py-0.5 rounded">${t.route}</span>
+                            <span class="text-[10px] ${t.status.includes('Aberto') ? 'text-amber-600 bg-amber-50' : 'text-emerald-600 bg-emerald-50'} px-1.5 py-0.5 rounded font-semibold">${t.status}</span>
+                        </div>
+                        <p class="text-xs font-bold text-gray-800">${t.date} • Partida: <span class="text-red-600">${t.time}</span></p>
+                        <p class="text-[10px] text-gray-500">Aeronave: ${t.ac} • Assento: ${t.seat} • Operado por LATAM Airlines</p>
+                    </div>
+                    <div class="text-red-600">
+                        <i class="fa-solid fa-qrcode text-xl"></i>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function openTicketModal(idx) {
+            const t = ticketsData[idx];
+            const modalContent = document.getElementById('modal-ticket-content');
+            
+            modalContent.innerHTML = `
+                <div class="space-y-3 text-xs text-gray-700">
+                    <div class="bg-gray-50 p-3 rounded-lg border space-y-1">
+                        <div class="flex justify-between"><span class="text-gray-500">Passageiro:</span><strong class="text-gray-900">PHILI PE DE SOUZA SILVA PORTO</strong></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Reg ANAC / Staff:</span><strong class="text-gray-900">370349 / ME-CGH</strong></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Voo:</span><strong class="text-red-600">${t.id} (${t.route})</strong></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Horário de Embarque:</span><strong class="text-gray-900">${t.time}</strong></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Equipamento:</span><strong class="text-gray-900">${t.ac}</strong></div>
+                        <div class="flex justify-between"><span class="text-gray-500">Status:</span><strong class="text-emerald-600">${t.status}</strong></div>
+                    </div>
+                    <div class="text-center bg-white p-3 border rounded-lg flex flex-col items-center justify-center space-y-2">
+                        <div id="qrcode-container" class="p-2 bg-white"></div>
+                        <p class="font-mono text-[10px] tracking-widest text-gray-600">||| | |||| || |||||| | |||| |||</p>
+                        <span class="text-[10px] text-gray-400">LATAM AIRLINES BRASIL • BILHETE STAFF CONFIRMADO</span>
+                    </div>
+                </div>
+            `;
+
+            document.getElementById('ticket-modal').classList.remove('hidden');
+
+            // Gerar QR Code Real via qrcode-generator
+            const qrEl = document.getElementById('qrcode-container');
+            qrEl.innerHTML = '';
+            try {
+                const qr = qrcode(0, 'M');
+                qr.data(`LATAM-STAFF-${t.id}-370349-PHILI-PE-${t.time}`);
+                qr.make();
+                qrEl.innerHTML = qr.createImgTag(4, 4);
+            } catch (e) {
+                qrEl.innerHTML = '<span class="text-xs text-red-500">Erro ao gerar QR Code</span>';
+            }
+        }
+
+        function closeTicketModal() {
+            document.getElementById('ticket-modal').classList.add('hidden');
+        }
+    </script>
+</body>
+</html>
